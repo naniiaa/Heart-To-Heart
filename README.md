@@ -5,8 +5,8 @@ Welcome to our Application Development Project!
 Our project is dedicated for our application development application.
 
 Team Members: 
-Bridjette Nania Centro - 1982228
-Sofya Kovalenko - 2270138
+# Bridjette Nania Centro - 1982228
+# Sofya Kovalenko - 2270138
 
 Project Links and References:
 
