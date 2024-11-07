@@ -120,7 +120,7 @@ class OnboardingPage extends StatelessWidget {
     required this.title,
     required this.description,
     required this.pageController,
-    super.key, // Add this to ensure it accepts a key
+    super.key,
   });
 
   @override

@@ -16,10 +16,9 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          // Background image with blur effect
           Positioned.fill(
             child: Image.asset(
-              'assets/images/hearthand.png', // Ensure this matches the image path in your project
+              'assets/images/hearthand.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -31,7 +30,6 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
             ),
           ),
-          // Sign-up form content
           Center(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
