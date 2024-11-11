@@ -3,49 +3,59 @@ import 'dart:ui';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
+import 'main_screen.dart';
+
+import 'searchBar.dart';
 
 void main() {
   runApp(const HeartToHeart());
 }
 
-class HeartToHeart extends StatelessWidget {
+class HeartToHeart extends StatelessWidget
+{
   const HeartToHeart({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: Colors.transparent,
       ),
-      home: const OnboardingScreen(),
-      initialRoute: '/login',
-      routes: {
-        '/login': (context) =>  LoginScreen(),
-        '/signup': (context) =>  SignupScreen(),
-      },
+      home: HomePage(),
+      // home: const OnboardingScreen(),
+      // initialRoute: '/',
+      // routes: {
+      //   '/login': (context) =>  LoginScreen(),
+      //   '/signup': (context) =>  SignupScreen(),
+      // },
     );
   }
 }
 
-class OnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget
+{
   const OnboardingScreen({super.key});
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen>
+{
   final PageController _pageController = PageController();
 
   @override
-  void dispose() {
+  void dispose()
+  {
     _pageController.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Scaffold(
       body: Stack(
         children: [
@@ -165,7 +175,7 @@ class OnboardingPage extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                Navigator.pushNamed(context, '/');
               },
               child: const Text('NEXT'),
             ),
