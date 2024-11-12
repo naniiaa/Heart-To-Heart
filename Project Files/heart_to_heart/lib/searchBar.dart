@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 
 import 'mainNavBar.dart';
+import 'bottomNavBar.dart';
+import 'dropDown.dart';
+
+
+
 
 class HomePage extends StatefulWidget
 {
@@ -29,7 +34,7 @@ class _HomePageState extends State<HomePage>
       theme: themeData,
       home: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 20,
+          toolbarHeight:0,
         ),
         body:
         Padding(
@@ -126,7 +131,21 @@ class _HomePageState extends State<HomePage>
                       ),
                   ],
                 ),
-                    Expanded(child: UpperNavBar())
+                Expanded(child: UpperNavBar()),
+
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Row(
+                    children:
+                    [
+                      Expanded(child: DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By')),
+                      Expanded(child: DropDown(list: ['Fresh Food', 'Preserved Food'],  fstEl: 'Fresh Food'))
+                    ],
+                  ),
+                ),
+
+
+                Expanded(child: BottomNavBar()),
               ],
             )
         ),
