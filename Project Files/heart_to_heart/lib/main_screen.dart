@@ -29,7 +29,8 @@ class HomePageItemsGeneral extends StatelessWidget
 {
   bool isDark = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Column(
       children: [
         Container(
@@ -395,7 +396,7 @@ class HomePageItemsGeneral extends StatelessWidget
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                  
+
                                   ],
                                 ),
                               ),
@@ -1368,7 +1369,7 @@ class HomePageItemsGeneral extends StatelessWidget
                                               mainAxisAlignment: MainAxisAlignment.center,
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
-                                              
+
                                               ],
                                             ),
                                           ),
