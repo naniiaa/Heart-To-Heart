@@ -31,6 +31,11 @@ dependencies:
   flutter:
     sdk: flutter
   smooth_page_indicator: ^1.0.0
+  # shared_preferences: any
+  firebase_core: any
+  firebase_auth: any
+  cloud_firestore: any
+  firebase_core_platform_interface: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -64,19 +69,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/images/hearthand.png
-    - assets/images/heart.png
+    - assets/images/hearthand1.png
 
-#  fonts:
-#    - family: Raleway
-#      fonts:
-#        - asset: fonts/Raleway-Regular.ttf
-#        - asset: fonts/Raleway-Italic.ttf
-#          style: italic
-#    - family: RobotoMono
-#      fonts:
-#        - asset: fonts/RobotoMono-Regular.ttf
-#        - asset: fonts/RobotoMono-Bold.ttf
-#          weight: 700
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

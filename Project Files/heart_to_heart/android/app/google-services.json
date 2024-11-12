@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "698250547272",
+    "project_id": "heart-to-heart-1",
+    "storage_bucket": "heart-to-heart-1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:698250547272:android:b41d1386682624fc3b487d",
+        "android_client_info": {
+          "package_name": "com.example.heart_to_heart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWc2YkYEWI0R7LmzprHpNBZHKdJkJE9RA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
