@@ -131,21 +131,40 @@ class _HomePageState extends State<HomePage>
                       ),
                   ],
                 ),
+
                 Expanded(child: UpperNavBar()),
 
+                // Remove the Expanded here, so that the Row is aligned at the top
                 Align(
                   alignment: Alignment.topCenter,
                   child: Row(
-                    children:
-                    [
-                      Expanded(child: DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By')),
-                      Expanded(child: DropDown(list: ['Fresh Food', 'Preserved Food'],  fstEl: 'Fresh Food'))
+                    mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
+                    children: [
+                      DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By'),
+                      SizedBox(width: 10), // Add spacing between the dropdowns
+                      DropDown(list: ['Fresh Food', 'Preserved Food'], fstEl: 'Fresh Food'),
                     ],
                   ),
                 ),
 
-
                 Expanded(child: BottomNavBar()),
+
+
+                // Expanded(child: UpperNavBar()),
+                //
+                // Align(
+                //   alignment: Alignment.topCenter,
+                //   child: Row(
+                //     children:
+                //     [
+                //       Expanded(child: DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By')),
+                //       Expanded(child: DropDown(list: ['Fresh Food', 'Preserved Food'],  fstEl: 'Fresh Food'))
+                //     ],
+                //   ),
+                // ),
+                //
+                //
+                // Expanded(child: BottomNavBar()),
               ],
             )
         ),
