@@ -30,6 +30,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+
+  dotted_border: ^2.0.0+2
+
+
   smooth_page_indicator: ^1.0.0
   # shared_preferences: any
   firebase_core: any
@@ -70,6 +74,7 @@ flutter:
   assets:
     - assets/images/hearthand.png
     - assets/images/hearthand1.png
+    - assets/images/heart.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

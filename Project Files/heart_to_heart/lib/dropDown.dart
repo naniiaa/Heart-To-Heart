@@ -23,7 +23,7 @@ class _DropDownState extends State<DropDown>
   {
     super.initState();
     list = widget.list;
-    //fstEl = widget.fstEl;
+    fstEl = widget.fstEl;
     dropdownValue = widget.fstEl;
   }
 
@@ -32,7 +32,7 @@ class _DropDownState extends State<DropDown>
   {
     return DropdownMenu<String>
     (
-      initialSelection: list.first,
+      initialSelection: fstEl,
       onSelected: (String? value)
       {
         // This is called when the user selects an item.

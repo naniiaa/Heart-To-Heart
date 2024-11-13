@@ -31,6 +31,7 @@ class _HomePageState extends State<HomePage>
     );
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: themeData,
       home: Scaffold(
         appBar: AppBar(
@@ -140,7 +141,7 @@ class _HomePageState extends State<HomePage>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
                     children: [
-                      DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By'),
+                      DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: "Sort By"),
                       SizedBox(width: 10), // Add spacing between the dropdowns
                       DropDown(list: ['Fresh Food', 'Preserved Food'], fstEl: 'Fresh Food'),
                     ],
@@ -149,22 +150,6 @@ class _HomePageState extends State<HomePage>
 
                 Expanded(child: BottomNavBar()),
 
-
-                // Expanded(child: UpperNavBar()),
-                //
-                // Align(
-                //   alignment: Alignment.topCenter,
-                //   child: Row(
-                //     children:
-                //     [
-                //       Expanded(child: DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By')),
-                //       Expanded(child: DropDown(list: ['Fresh Food', 'Preserved Food'],  fstEl: 'Fresh Food'))
-                //     ],
-                //   ),
-                // ),
-                //
-                //
-                // Expanded(child: BottomNavBar()),
               ],
             )
         ),
@@ -172,3 +157,18 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
+
+//
+// Align(
+//   alignment: Alignment.topCenter,
+//   child: Row(
+//     children:
+//     [
+//       Expanded(child: DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By')),
+//       Expanded(child: DropDown(list: ['Fresh Food', 'Preserved Food'],  fstEl: 'Fresh Food'))
+//     ],
+//   ),
+// ),
+//
+//
+// Expanded(child: BottomNavBar()),

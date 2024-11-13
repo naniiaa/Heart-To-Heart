@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 
-class HomePageScreen extends StatefulWidget {
+import 'package:heart_to_heart/searchBar.dart';
+
+import 'newPostLisitngForm.dart';
+
+class HomePageScreen extends StatefulWidget
+{
   const HomePageScreen({super.key});
 
   @override
   State<HomePageScreen> createState() => _HomePageScreenState();
 }
 
-class _HomePageScreenState extends State<HomePageScreen> {
+class _HomePageScreenState extends State<HomePageScreen>
+{
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Scaffold(
-      backgroundColor: Color(0xFFF5FBF6),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text("chikenc nuggets"),
       ),
-      body: Text('Test'),
+      body: NewListing()
+      //HomePage(),
     );
   }
 }
