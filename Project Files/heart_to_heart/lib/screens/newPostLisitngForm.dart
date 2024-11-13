@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class NewListing extends StatefulWidget
@@ -14,49 +17,66 @@ class _NewListingState extends State<NewListing>
 {
   final _formKey = GlobalKey<FormState>();
 
+  // InkWell(
+  // onTap: ()
+  // {
+  // //Text('main page');
+  // }, // Splash color over image
+  // child: Ink.image(
+  // fit: BoxFit.cover, // Fixes border issues
+  // width: 50,
+  // height: 50,
+  // padding: const EdgeInsets.all(15.0),
+  // image: const AssetImage('assets/images/heart.png'),
+  // ),
+  // ),
+
   @override
   Widget build(BuildContext context)
   {
     return Scaffold(
-      appBar: AppBar(
-
-      ),
+      appBar: AppBar(),
       body: Form(
           key: _formKey,
-          child:
-          Padding(
+          child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child:
-              Column(
-                children:<Widget>
+              child: Column(
+                children: <Widget>
                 [
-                  CustomTextField(label: 'Title',),
+                  CustomTextField(label: 'Title'),
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
 
-                  CustomTextField(label: 'Description',),
+                  CustomTextField(label: 'Description'),
 
-                  SizedBox(height: 20,),
+                  SizedBox(height: 20),
 
                   DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By'),
 
-                  SizedBox(height: 20,), // Add spacing between the dropdowns
+                  SizedBox(height: 20),
 
-                  DropDown(list: ['Fresh Food', 'Preserved Food'], fstEl: 'Fresh Food'),
+                  DropDown(list: ['Fresh Food', 'Preserved Food'],fstEl: 'Fresh Food'),
 
-                  SizedBox(height: 30,),
+                  SizedBox(height: 30),
 
-                  Expanded(child: InsertImage())
+                  Expanded(child: InsertImage()),
 
+                  SizedBox(height: 30),
+
+                  ElevatedButton(
+                      onPressed: (){},
+                      style: ElevatedButton.styleFrom(
+                          side: BorderSide(
+                              width: double.infinity,
+                              color: Colors.teal
+                          )
+                      ),
+                      child: Text("Submit"))
                 ],
-              )
-          )
-      ),
+              ))),
     );
   }
 }
-
-
 
 class DropDown extends StatefulWidget
 {
@@ -87,9 +107,7 @@ class _DropDownState extends State<DropDown>
     if (!list.contains(fstEl))
     {
       dropdownValue = list.first;
-    }
-    else
-    {
+    } else {
       dropdownValue = fstEl;
     }
   }
@@ -100,45 +118,33 @@ class _DropDownState extends State<DropDown>
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      decoration: BoxDecoration
-      (
-        border: Border.all
-        (
+      decoration: BoxDecoration(
+        border: Border.all(
           color: Colors.teal,
           width: 2.0,
         ),
         borderRadius: BorderRadius.circular(5.0),
       ),
-
-      child: DropdownButton
-      (
-        isExpanded: true,
-        value: dropdownValue,
-
-        items: list.map<DropdownMenuItem<String>>((String value)
-        {
-          return DropdownMenuItem<String>
-          (
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-
-        onChanged: (String? newVal)
-        {
-          setState(()
+      child: DropdownButton(
+          isExpanded: true,
+          value: dropdownValue,
+          items: list.map<DropdownMenuItem<String>>((String value)
           {
-            dropdownValue = newVal!;
-          });
-        }
-      ),
-
-
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: (String? newVal)
+          {
+            setState(()
+            {
+              dropdownValue = newVal!;
+            });
+          }),
     );
   }
 }
-
-
 
 class InsertImage extends StatefulWidget
 {
@@ -150,14 +156,50 @@ class InsertImage extends StatefulWidget
 
 class _InsertImageState extends State<InsertImage>
 {
+  File? image;
+  late ImagePicker imagePicker;
+
+  @override
+  void initState()
+  {
+    // TODO: implement initState
+    super.initState();
+    imagePicker = ImagePicker();
+  }
+
+  chooseImage() async
+  {
+    XFile? selectedImg = await imagePicker.pickImage(source: ImageSource.gallery);
+    if(selectedImg != null)
+    {
+      image = File(selectedImg.path);
+      setState(()
+      {
+        image;
+      });
+    }
+  }
+
+  captureImage() async
+  {
+    XFile? selectedImg = await imagePicker.pickImage(source: ImageSource.camera);
+    if(selectedImg != null)
+    {
+      image = File(selectedImg.path);
+      setState(()
+      {
+        image;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context)
   {
     return Scaffold(
       body: Column(
         mainAxisSize: MainAxisSize.min,
-        children:
-        [
+        children: [
           DottedBorder(
             color: Colors.teal,
             dashPattern: [30, 10],
@@ -165,9 +207,36 @@ class _InsertImageState extends State<InsertImage>
             borderType: BorderType.RRect, // Use rounded rectangle
             radius: Radius.circular(30),
             child: Container(
-              height: 200,
+              height: 222,
               width: 400,
-              color: Colors.transparent,
+              child: Column(
+                children: <Widget>
+                [
+                  SizedBox(height: 10),
+
+                  image == null? Icon(Icons.image_outlined, size: 80): Image.file(image!),
+
+                  Text("Choose a file or capture a picture", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+
+                  SizedBox(height: 20),
+
+                  Text("JPEG, PNG, PDG formats up to 50MB", style: TextStyle(color: Colors.grey)),
+
+                  SizedBox(height: 10),
+
+                  ElevatedButton(
+                    onPressed: ()
+                    {
+                      chooseImage();
+                    },
+                    onLongPress: ()
+                    {
+                      captureImage();
+                    },
+                    child: Text('Browse/Capture'),
+                  )
+                ],
+              ),
             )
           )
         ],
@@ -176,63 +245,6 @@ class _InsertImageState extends State<InsertImage>
   }
 }
 
-
-class DottedBorderPainter extends CustomPainter
-{
-  @override
-  void paint(Canvas canvas, Size size)
-  {
-    final Paint paint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;  // Thickness of the dash
-
-    double dashWidth = 10.0; // Width of each dash
-    double dashSpace = 5.0;  // Space between dashes
-
-    // Draw dashed top border
-    double startX = 0.0;
-    while (startX < size.width)
-    {
-      // Draw dash
-      canvas.drawLine(Offset(startX, 0), Offset(startX + dashWidth, 0), paint);
-      startX += dashWidth + dashSpace; // Move to the next dash position
-    }
-
-    // Draw dashed bottom border
-    startX = 0.0;
-    while (startX < size.width)
-    {
-      // Draw dash
-      canvas.drawLine(Offset(startX, size.height), Offset(startX + dashWidth, size.height), paint);
-      startX += dashWidth + dashSpace; // Move to the next dash position
-    }
-
-    // Draw dashed left border
-    double startY = 0.0;
-    while (startY < size.height)
-    {
-      // Draw dash on the left
-      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashWidth), paint);
-      startY += dashWidth + dashSpace; // Move to the next dash position
-    }
-
-    // Draw dashed right border
-    startY = 0.0;
-    while (startY < size.height)
-    {
-      // Draw dash on the right
-      canvas.drawLine(Offset(size.width, startY), Offset(size.width, startY + dashWidth), paint);
-      startY += dashWidth + dashSpace; // Move to the next dash position
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate)
-  {
-    return false;
-  }
-}
 
 
 class CustomTextField extends StatefulWidget
@@ -267,7 +279,8 @@ class _CustomTextFieldState extends State<CustomTextField>
     super.dispose();
   }
 
-  void _onFocusChange() {
+  void _onFocusChange()
+  {
     setState(() {}); // Update the widget when focus changes
   }
 
@@ -277,34 +290,23 @@ class _CustomTextFieldState extends State<CustomTextField>
     return TextFormField(
       controller: _controller,
       focusNode: _focusNode,
-
       decoration: InputDecoration(
         labelText: widget.label,
         hintText: 'Enter ${widget.label}',
         border: OutlineInputBorder(),
-
-        enabledBorder: OutlineInputBorder
-        (
+        enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.teal, width: 2.0),
         ),
-
-        focusedBorder: OutlineInputBorder
-        (
+        focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.teal, width: 2.0),
         ),
-
-        labelStyle: TextStyle
-        (
+        labelStyle: TextStyle(
           color: _focusNode.hasFocus ? Colors.teal : Colors.black,
         ),
-
-        errorBorder: OutlineInputBorder
-        (
+        errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red, width: 2.0),
         ),
-
-        focusedErrorBorder: OutlineInputBorder
-        (
+        focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red, width: 2.0),
         ),
       ),
