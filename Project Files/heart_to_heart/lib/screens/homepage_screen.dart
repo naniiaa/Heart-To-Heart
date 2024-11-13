@@ -19,10 +19,8 @@ class _HomePageScreenState extends State<HomePageScreen>
   {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("chikenc nuggets"),
-      ),
-      body: NewListing()
+      body:
+      NewListing()
       //HomePage(),
     );
   }

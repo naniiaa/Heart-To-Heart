@@ -5,9 +5,6 @@ import 'mainNavBar.dart';
 import 'bottomNavBar.dart';
 import 'dropDown.dart';
 
-
-
-
 class HomePage extends StatefulWidget
 {
   const HomePage({super.key});
