@@ -7,8 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 
-
-
 class NewListing extends StatefulWidget
 {
   const NewListing({super.key});
@@ -43,9 +41,9 @@ class _NewListingState extends State<NewListing>
         {
           'title': title,
           'description': description,
-          'type': ,
-          'category': ,
-          'image':
+          'type': sortByValue,
+          'category': foodTypeValue,
+          'image': 'heehee'
         });
 
         // After submission, clear the form
@@ -55,7 +53,7 @@ class _NewListingState extends State<NewListing>
         setState(()
         {
           sortByValue = 'Sort By'; // reset dropdowns to default
-          foodTypeValue = 'Fresh Food';
+          foodTypeValue = 'Type Of';
         });
 
       }
@@ -99,7 +97,8 @@ class _NewListingState extends State<NewListing>
                     {
                       Navigator.pop(context);
                     }, // Splash color over image
-                    child: Ink.image(
+                    child: Ink.image
+                    (
                       fit: BoxFit.cover, // Fixes border issues
                       width: 50,
                       height: 50,
@@ -135,7 +134,8 @@ class _NewListingState extends State<NewListing>
                   SizedBox(height: 20),
 
                   DropDown(
-                      list: ['Distance', 'Old to New', 'New to Old'],
+                    //type
+                      list: ['Fresh food', 'Preserved food', 'Dairy', 'Grains', 'Pseudo grains', 'Legumes', 'Ancient Grains', 'Processed food', 'Furniture', 'Clothing' , 'Toys' ,  'Appliances', 'Repair', 'Clean Up' , 'Healthcare', 'Odd jobs'],
                       fstEl: sortByValue,
                       onChanged: (newVal)
                       {
@@ -143,20 +143,23 @@ class _NewListingState extends State<NewListing>
                         {
                           sortByValue = newVal;
                         });
-                      ),
+                      }
+                  ),
 
                   SizedBox(height: 20),
 
                   DropDown(
-                      list: ['Fresh Food', 'Preserved Food'],
+                    //category
+                      list: ['Item Donations','Food Donations','Service Donations'],
                       fstEl: foodTypeValue,
                       onChanged: (newVal)
                       {
                         setState(()
                         {
-                          sortByValue = newVal;
+                          foodTypeValue = newVal;
                         }
-                      );
+                        );
+                      }
                   ),
 
                   SizedBox(height: 20),
@@ -196,7 +199,13 @@ class _NewListingState extends State<NewListing>
 
 class DropDown extends StatefulWidget
 {
-  const DropDown({super.key, required this.list, required this.fstEl, required this.onChanged});
+  const DropDown(
+  {
+    super.key,
+    required this.list,
+    required this.fstEl,
+    required this.onChanged,
+  });
 
   final List<String> list;
   final String fstEl;
@@ -216,16 +225,13 @@ class _DropDownState extends State<DropDown>
     super.initState();
     dropdownValue = widget.fstEl;
 
-    // Ensure the initial dropdownValue exists in the list
-    // If it doesn't exist, set it to the first item in the list
-    // if (!list.contains(fstEl))
-    // {
-    //   dropdownValue = list.first;
-    // }
-    // else
-    // {
-    //   dropdownValue = fstEl;
-    // }
+    // You can uncomment the following lines to ensure the initial value
+    //is present in the list (if you need this logic):
+
+    if (!widget.list.contains(dropdownValue))
+    {
+      dropdownValue = widget.list.first;  // Default to the first item
+    }
   }
 
   @override
@@ -241,29 +247,28 @@ class _DropDownState extends State<DropDown>
         ),
         borderRadius: BorderRadius.circular(5.0),
       ),
-      child: DropdownButton(
-
-          isExpanded: true,
-          value: dropdownValue,
-          items:  widget.list.map<DropdownMenuItem<String>>((String value)
-          {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (String? newVal)
-          {
-            if (newVal != null)
-            {
-              dropdownValue = newVal;
-            }
-            widget.onChanged(dropdownValue);
+      child: DropdownButton<String>(
+        isExpanded: true,
+        value: dropdownValue, // This is the current selected value
+        items: widget.list.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (String? newVal) {
+          if (newVal != null) {
+            setState(() {
+              dropdownValue = newVal;  // Update the internal state and UI
+            });
+            widget.onChanged(newVal);  // Notify the parent with the new value
           }
-        ),
+        },
+      ),
     );
   }
 }
+
 
 class InsertImage extends StatefulWidget
 {
