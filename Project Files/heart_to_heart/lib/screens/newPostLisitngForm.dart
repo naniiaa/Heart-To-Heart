@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,21 +19,60 @@ class NewListing extends StatefulWidget
 
 class _NewListingState extends State<NewListing>
 {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   final _formKey = GlobalKey<FormState>();
   final GlobalKey<_InsertImageState> _insertImageKey = GlobalKey<_InsertImageState>();
 
-  void submitForm()
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
+  String sortByValue = 'Sort By';
+  String foodTypeValue = 'Fresh Food';
+
+  void submitForm() async
   {
     if (_formKey.currentState?.validate() ?? false)
     {
-      if (_insertImageKey.currentState?.isImageSelected() ?? false)
+      try
       {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Form Submitted!')));
+        String title = titleController.text;
+        String description = descriptionController.text;
+
+        await _firestore.collection('lisitngs').add(
+        {
+          'title': title,
+          'description': description,
+          'type': ,
+          'category': ,
+          'image':
+        });
+
+        // After submission, clear the form
+        titleController.clear();
+        descriptionController.clear();
+
+        setState(()
+        {
+          sortByValue = 'Sort By'; // reset dropdowns to default
+          foodTypeValue = 'Fresh Food';
+        });
+
       }
-      else
+      catch(e)
       {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please select an image.')));
+        print("Error adding user: $e");
       }
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Form Submitted!')));
+      // if (_insertImageKey.currentState?.isImageSelected() ?? false)
+      // {
+      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Form Submitted!')));
+      // }
+      // else
+      // {
+      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please select an image.')));
+      // }
     }
     else
     {
@@ -86,19 +126,38 @@ class _NewListingState extends State<NewListing>
 
                   SizedBox(height: 20),
 
-                  CustomTextField(label: 'Title'),
+                  CustomTextField(label: 'Title', controller: titleController),
 
                   SizedBox(height: 20),
 
-                  CustomTextField(label: 'Description'),
+                  CustomTextField(label: 'Description', controller: descriptionController),
 
                   SizedBox(height: 20),
 
-                  DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By'),
+                  DropDown(
+                      list: ['Distance', 'Old to New', 'New to Old'],
+                      fstEl: sortByValue,
+                      onChanged: (newVal)
+                      {
+                        setState(()
+                        {
+                          sortByValue = newVal;
+                        });
+                      ),
 
                   SizedBox(height: 20),
 
-                  DropDown(list: ['Fresh Food', 'Preserved Food'],fstEl: 'Fresh Food'),
+                  DropDown(
+                      list: ['Fresh Food', 'Preserved Food'],
+                      fstEl: foodTypeValue,
+                      onChanged: (newVal)
+                      {
+                        setState(()
+                        {
+                          sortByValue = newVal;
+                        }
+                      );
+                  ),
 
                   SizedBox(height: 20),
 
@@ -137,10 +196,11 @@ class _NewListingState extends State<NewListing>
 
 class DropDown extends StatefulWidget
 {
-  const DropDown({super.key, required this.list, required this.fstEl});
+  const DropDown({super.key, required this.list, required this.fstEl, required this.onChanged});
 
   final List<String> list;
   final String fstEl;
+  final ValueChanged<String> onChanged;
 
   @override
   State<DropDown> createState() => _DropDownState();
@@ -148,25 +208,24 @@ class DropDown extends StatefulWidget
 
 class _DropDownState extends State<DropDown>
 {
-  late List<String> list;
-  late String fstEl;
   late String dropdownValue;
 
   @override
   void initState()
   {
     super.initState();
-    list = widget.list;
-    fstEl = widget.fstEl;
+    dropdownValue = widget.fstEl;
 
     // Ensure the initial dropdownValue exists in the list
     // If it doesn't exist, set it to the first item in the list
-    if (!list.contains(fstEl))
-    {
-      dropdownValue = list.first;
-    } else {
-      dropdownValue = fstEl;
-    }
+    // if (!list.contains(fstEl))
+    // {
+    //   dropdownValue = list.first;
+    // }
+    // else
+    // {
+    //   dropdownValue = fstEl;
+    // }
   }
 
   @override
@@ -183,9 +242,10 @@ class _DropDownState extends State<DropDown>
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: DropdownButton(
+
           isExpanded: true,
           value: dropdownValue,
-          items: list.map<DropdownMenuItem<String>>((String value)
+          items:  widget.list.map<DropdownMenuItem<String>>((String value)
           {
             return DropdownMenuItem<String>(
               value: value,
@@ -194,11 +254,13 @@ class _DropDownState extends State<DropDown>
           }).toList(),
           onChanged: (String? newVal)
           {
-            setState(()
+            if (newVal != null)
             {
-              dropdownValue = newVal!;
-            });
-          }),
+              dropdownValue = newVal;
+            }
+            widget.onChanged(dropdownValue);
+          }
+        ),
     );
   }
 }
@@ -325,8 +387,9 @@ class _InsertImageState extends State<InsertImage>
 class CustomTextField extends StatefulWidget
 {
   final String label;
+  final TextEditingController controller;
 
-  CustomTextField({required this.label});
+  CustomTextField({required this.label, required this.controller});
 
   @override
   _CustomTextFieldState createState() => _CustomTextFieldState();
@@ -364,7 +427,7 @@ class _CustomTextFieldState extends State<CustomTextField>
   Widget build(BuildContext context)
   {
     return TextFormField(
-      controller: _controller,
+      controller: widget.controller,
       focusNode: _focusNode,
 
       decoration: InputDecoration(
