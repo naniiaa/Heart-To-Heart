@@ -13,7 +13,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), ()
+    {
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => AuthWrapper()));
     });
   }
@@ -28,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Container(
                 child: Image.asset('assets/images/hearthand.png', fit: BoxFit.contain),
-              alignment: Alignment.bottomCenter,
+                        alignment: Alignment.bottomCenter,
             ),
             const SizedBox(height: 20),
              CircularProgressIndicator(),

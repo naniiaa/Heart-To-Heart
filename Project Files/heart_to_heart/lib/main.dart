@@ -35,7 +35,8 @@ class HeartToHeart extends StatelessWidget
         scaffoldBackgroundColor: Colors.transparent,
       ),
       home: SplashScreen(),
-      routes: {
+      routes:
+      {
         '/onboarding' : (context) => OnboardingScreen(),
         '/login': (context) =>  LogInScreen(),
         '/signup': (context) =>  SignUpScreen(),

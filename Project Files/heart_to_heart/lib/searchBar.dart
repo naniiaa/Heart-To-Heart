@@ -47,6 +47,7 @@ class _HomePageState extends State<HomePage>
                       InkWell(
                         onTap: ()
                         {
+                          Navigator.pushNamed(context, "/home");
                             //Text('main page');
                         }, // Splash color over image
                         child: Ink.image(
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage>
                       ),
 
                       SearchAnchor(builder:
-                          (BuildContext context, SearchController controller)
+                      (BuildContext context, SearchController controller)
                       {
                         return SizedBox
                           (
@@ -76,7 +77,7 @@ class _HomePageState extends State<HomePage>
                           SearchBar(
                             controller: controller,
                             padding: const  WidgetStatePropertyAll <EdgeInsets>
-                              (
+                            (
                                 EdgeInsets.symmetric(horizontal: 16.0)
                             ),
                             onTap: ()
@@ -132,15 +133,12 @@ class _HomePageState extends State<HomePage>
 
                 Expanded(child: UpperNavBar()),
 
-                // Remove the Expanded here, so that the Row is aligned at the top
                 Align(
                   alignment: Alignment.topCenter,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center, // Center the Row horizontally
                     children: [
                       DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: "Sort By"),
-                      SizedBox(width: 10), // Add spacing between the dropdowns
-                      DropDown(list: ['Fresh Food', 'Preserved Food'], fstEl: 'Fresh Food'),
                     ],
                   ),
                 ),
@@ -154,18 +152,3 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
-
-//
-// Align(
-//   alignment: Alignment.topCenter,
-//   child: Row(
-//     children:
-//     [
-//       Expanded(child: DropDown(list: ['Distance', 'Old to New', 'New to Old'], fstEl: 'Sort By')),
-//       Expanded(child: DropDown(list: ['Fresh Food', 'Preserved Food'],  fstEl: 'Fresh Food'))
-//     ],
-//   ),
-// ),
-//
-//
-// Expanded(child: BottomNavBar()),

@@ -20,8 +20,8 @@ class _HomePageScreenState extends State<HomePageScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       body:
-      NewListing()
-      //HomePage(),
+      //NewListing()
+      HomePage(),
     );
   }
 }
