@@ -5,6 +5,9 @@ import 'mainNavBar.dart';
 import 'bottomNavBar.dart';
 import 'dropDown.dart';
 
+
+import 'package:heart_to_heart/util/displayListingsMain.dart';
+
 class HomePage extends StatefulWidget
 {
   const HomePage({super.key});
@@ -142,6 +145,10 @@ class _HomePageState extends State<HomePage>
                     ],
                   ),
                 ),
+
+                SizedBox(height: 20,),
+
+                DisplayListings(),
 
                 Expanded(child: BottomNavBar()),
 
